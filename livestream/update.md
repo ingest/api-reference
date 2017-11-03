@@ -1,0 +1,46 @@
+# Update a Live Stream
+
+Updates a live stream. Since most of a live stream resource is managed internally the only field available for update is the title property.
+
+**URL** : `/live/<id>`
+
+**URL Parameters** : Include the live stream `id` in the URL of the `PATCH` request.
+
+**Method** : `PATCH`
+
+**Auth required** : YES
+
+**Permissions required** : `write_live`
+
+**Request Body**
+
+Provide the new title of the Live Stream being updated.
+
+```json
+{
+	"title": "New live stream title"
+}
+```
+
+## Success Response
+
+**Code** : `200 OK`
+
+**Response example**
+
+```json
+{
+    "id": "bb1c1bc2-7932-48be-937e-d7605d27f4e8",
+    "url": "https://api.ingest.i0/live/bb1c1bc2-7932-48be-937e-d7605d27f4e8",
+    "stream_key": "zHABj7dbla12345",
+    "title": "Live stream title",
+    "network_id": "0bfac7d5-d78b-43e6-98d0-3cce91912345",
+    "rtmp_url": "rtmp://live.ingest.io/origin/zHABj7dbla12345",
+    "play_url": "https://stream.ingest.info/bb1c1bc2-7932-48be-937e-d7605d27f4e8/master.m3u8",
+    "status": "IDLE",
+    "created_at": "2017-09-11T12:11:04.975232Z",
+    "finished_at": null,
+    "deleted_at": null,
+    "modified_at": null
+}
+```
