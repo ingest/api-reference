@@ -43,6 +43,21 @@ Every user of the Ingest service belongs to one or more network. Every operation
 * [Add existing user to Network](networks/user-add.md) : `LINK /networks/<id>`
 * [Remove user from Network](networks/user-remove.md) : `UNLINK /networks/<id>`
 
+### Inputs
+
+Inputs are used in conjunction with Profiles and Jobs as part of Ingest’s Encoder. You can upload video, audio and subtitle tracks to use as inputs by the API. Supported operations include creating, reading, updating, and deleting inputs.
+
+* [Count Inputs](inputs/count.md) : `HEAD /inputs`
+* [Get Inputs](inputs/get.md) : `GET /inputs`
+* [Get Input](inputs/get-single.md) : `GET /inputs/<id>`
+* [Create Input](inputs/create.md) : `POST /encoding/inputs`
+* [Update Input](inputs/update.md) : `PATCH /encoding/inputs/<id>`
+* [Delete Input](inputs/delete.md) : `DELETE /encoding/inputs/<id>`
+* [Initialize Upload](inputs/upload-init.md) : `POST /encoding/inputs/<id>/upload`
+* [Sign Upload](inputs/upload-sign.md) : `POST /encoding/inputs/<id>/upload/sign`
+* [Complete Upload](inputs/upload-complete.md) : `POST /encoding/inputs/<id>/upload/complete`
+* [Abort Upload](inputs/upload-abort.md) : `POST /encoding/inputs/<id>/upload/abort`
+
 ### Videos
 
 The video resource for the Ingest service is a core component of our offering. It allows a user of Ingest to store metadata related to their video content in a single source for easy presentation to their end-users.
