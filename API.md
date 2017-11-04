@@ -19,6 +19,33 @@ JSON is returned by all API responses, however this may be different where our S
 
 ## Resources
 
+### Events
+
+If your account is subscribed to webhooks, Ingest will create events according to changes happening to your network and notify you through HTTP POST requests.
+
+[*Event Object*](events/object.md)
+
+* [Supported Events](events/supported.md)
+* [Count Events](events/count.md) : `HEAD /events`
+* [Get Events](events/get.md) : `GET /events`
+* [Get Event](events/get-single.md) : `GET /events/<id>`
+* [Retrieve Event Types](events/get-types.md) : `GET /events/types`
+
+### Inputs
+
+Inputs are used in conjunction with Profiles and Jobs as part of Ingest’s Encoder. You can upload video, audio and subtitle tracks to use as inputs by the API. Supported operations include creating, reading, updating, and deleting inputs.
+
+* [Count Inputs](inputs/count.md) : `HEAD /inputs`
+* [Get Inputs](inputs/get.md) : `GET /inputs`
+* [Get Input](inputs/get-single.md) : `GET /inputs/<id>`
+* [Create Input](inputs/create.md) : `POST /encoding/inputs`
+* [Update Input](inputs/update.md) : `PATCH /encoding/inputs/<id>`
+* [Delete Input](inputs/delete.md) : `DELETE /encoding/inputs/<id>`
+* [Initialize Upload](inputs/upload-init.md) : `POST /encoding/inputs/<id>/upload`
+* [Sign Upload](inputs/upload-sign.md) : `POST /encoding/inputs/<id>/upload/sign`
+* [Complete Upload](inputs/upload-complete.md) : `POST /encoding/inputs/<id>/upload/complete`
+* [Abort Upload](inputs/upload-abort.md) : `POST /encoding/inputs/<id>/upload/abort`
+
 ### Live Stream
 
 Ingest's live stream feature receives an RTMP stream as input and transcodes content to HLS format. Upon creation of a live stream resource, a stream key is generated, which will serve as your authentication point to our RTMP server. Any publishing from an invalid stream key will be disconnected.
@@ -43,20 +70,24 @@ Every user of the Ingest service belongs to one or more network. Every operation
 * [Add existing user to Network](networks/user-add.md) : `LINK /networks/<id>`
 * [Remove user from Network](networks/user-remove.md) : `UNLINK /networks/<id>`
 
-### Inputs
+### Profiles
 
-Inputs are used in conjunction with Profiles and Jobs as part of Ingest’s Encoder. You can upload video, audio and subtitle tracks to use as inputs by the API. Supported operations include creating, reading, updating, and deleting inputs.
+Profiles are viewed by Ingest as the settings which configure the Encoding process. Use of the `/encoding/profiles` resource allows a user to describe exactly what settings should be used when producing the final renditions that will be streamed to the end user.
 
-* [Count Inputs](inputs/count.md) : `HEAD /inputs`
-* [Get Inputs](inputs/get.md) : `GET /inputs`
-* [Get Input](inputs/get-single.md) : `GET /inputs/<id>`
-* [Create Input](inputs/create.md) : `POST /encoding/inputs`
-* [Update Input](inputs/update.md) : `PATCH /encoding/inputs/<id>`
-* [Delete Input](inputs/delete.md) : `DELETE /encoding/inputs/<id>`
-* [Initialize Upload](inputs/upload-init.md) : `POST /encoding/inputs/<id>/upload`
-* [Sign Upload](inputs/upload-sign.md) : `POST /encoding/inputs/<id>/upload/sign`
-* [Complete Upload](inputs/upload-complete.md) : `POST /encoding/inputs/<id>/upload/complete`
-* [Abort Upload](inputs/upload-abort.md) : `POST /encoding/inputs/<id>/upload/abort`
+Also introduced in profiles is the concept of variant playlists. In the adaptive bitrate streaming technologies supported by Ingest, you need master playlists to run a smooth streaming process. Ingest takes this concept one step further, allowing a user to create multiple versions of these playlists, which we call variants.
+
+The example profile creates two HLS master playlists. One called `low` and the other `medium`, each representing varying qualities and supporting different renditions. Another potential use-case for this is to target specific user-agents that may have limitations. A notable example of this would be the Roku 3, which is unable to play audio that has more than two channels.
+
+If this was a target for your streaming needs, it would be simple to configure a variant playlist to serve specifically Roku users of your application.
+
+[*Profiles Object*](profiles/object.md)
+
+* [Count Profiles](profiles/count.md) : `HEAD /encoding/profiles`
+* [Get Profiles](profiles/get.md) : `GET /encoding/profiles`
+* [Get Profile](profiles/get-single.md) : `GET /encoding/profiles/<id>`
+* [Create Profile](profiles/create.md) : `POST /encoding/profiles`
+* [Update Profile](profiles/update.md) : `PUT /encoding/profiles/<id>`
+* [Delete Profile](profiles/delete.md) : `DELETE /encoding/profiles/<id>`
 
 ### Videos
 
@@ -77,21 +108,20 @@ Our encoder uses the Video resource as the output location for the final media e
 * [Get Private State](videos/get-private.md) : `GET /videos/<id>/private`
 * [Get Variants](videos/get-variants.md) : `GET /videos/<id>/variants`
 
-### Profiles
+### Webhooks
 
-Profiles are viewed by Ingest as the settings which configure the Encoding process. Use of the `/encoding/profiles` resource allows a user to describe exactly what settings should be used when producing the final renditions that will be streamed to the end user.
+The Webhooks API can be used to be notified about any event that may happen to your network.
+Simply subscribe to one or more events by registering your webhook endpoint, and we will send an HTTP POST request to the specified URL containing the appropriate payload.
 
-Also introduced in profiles is the concept of variant playlists. In the adaptive bitrate streaming technologies supported by Ingest, you need master playlists to run a smooth streaming process. Ingest takes this concept one step further, allowing a user to create multiple versions of these playlists, which we call variants.
+#### Security
 
-The example profile creates two HLS master playlists. One called `low` and the other `medium`, each representing varying qualities and supporting different renditions. Another potential use-case for this is to target specific user-agents that may have limitations. A notable example of this would be the Roku 3, which is unable to play audio that has more than two channels.
+As a way to validate the identity of the request, Ingest will include a Header X-Ingest-Signature containing a hex encoded HMAC of the request body. The SHA1 HMAC encryption is done using a secret key, generated during the webhook subscription.
 
-If this was a target for your streaming needs, it would be simple to configure a variant playlist to serve specifically Roku users of your application.
+If you don’t provide one during the registration process we will generate it automatically and return it with the response body.
 
-[*Profiles Object*](profiles/object.md)
-
-* [Count Profiles](profiles/count.md) : `HEAD /encoding/profiles`
-* [Get Profiles](profiles/get.md) : `GET /encoding/profiles`
-* [Get Profile](profiles/get-single.md) : `GET /encoding/profiles/<id>`
-* [Create Profile](profiles/create.md) : `POST /encoding/profiles`
-* [Update Profile](profiles/update.md) : `PUT /encoding/profiles/<id>`
-* [Delete Profile](profiles/delete.md) : `DELETE /encoding/profiles/<id>`
+* [Register A Webhook](webhooks/register.md) : `POST /hooks`
+* [Get Webhooks](webhooks/get.md) : `GET /hooks`
+* [Get Webhook](webhooks/get-single.md) : `GET /hooks/<event>`
+* [Update A Webhook](webhooks/update.md) : `PATCH /hooks`
+* [Remove a Webhook](webhooks/remove.md) : `DELETE /hooks`
+* [Receiving a Webhook](webhooks/receiving.md)
