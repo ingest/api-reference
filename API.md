@@ -76,3 +76,22 @@ Our encoder uses the Video resource as the output location for the final media e
 * [Delete Thumbnail](videos/delete-thumbnail.md) : `DELETE /videos/<id>/thumbnail/<id>`
 * [Get Private State](videos/get-private.md) : `GET /videos/<id>/private`
 * [Get Variants](videos/get-variants.md) : `GET /videos/<id>/variants`
+
+### Profiles
+
+Profiles are viewed by Ingest as the settings which configure the Encoding process. Use of the `/encoding/profiles` resource allows a user to describe exactly what settings should be used when producing the final renditions that will be streamed to the end user.
+
+Also introduced in profiles is the concept of variant playlists. In the adaptive bitrate streaming technologies supported by Ingest, you need master playlists to run a smooth streaming process. Ingest takes this concept one step further, allowing a user to create multiple versions of these playlists, which we call variants.
+
+The example profile creates two HLS master playlists. One called `low` and the other `medium`, each representing varying qualities and supporting different renditions. Another potential use-case for this is to target specific user-agents that may have limitations. A notable example of this would be the Roku 3, which is unable to play audio that has more than two channels.
+
+If this was a target for your streaming needs, it would be simple to configure a variant playlist to serve specifically Roku users of your application.
+
+[*Profiles Object*](profiles/object.md)
+
+* [Count Profiles](profiles/count.md) : `HEAD /encoding/profiles`
+* [Get Profiles](profiles/get.md) : `GET /encoding/profiles`
+* [Get Profile](profiles/get-single.md) : `GET /encoding/profiles/<id>`
+* [Create Profile](profiles/create.md) : `POST /encoding/profiles`
+* [Update Profile](profiles/update.md) : `PUT /encoding/profiles/<id>`
+* [Delete Profile](profiles/delete.md) : `DELETE /encoding/profiles/<id>`
