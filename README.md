@@ -89,6 +89,18 @@ If this was a target for your streaming needs, it would be simple to configure a
 * [Update Profile](profiles/update.md) : `PUT /encoding/profiles/<id>`
 * [Delete Profile](profiles/delete.md) : `DELETE /encoding/profiles/<id>`
 
+### Jobs
+
+Jobs are the state management piece that presents [inputs](#inputs) and [profiles](#profiles) to create encoded content. Describing how they should be encoded to create the final representations for streaming to end-users.
+
+[*Jobs Object*](jobs/object.md)
+
+* [Count Jobs](jobs/count.md) : `HEAD /encoding/jobs`
+* [Get Jobs](jobs/get.md) : `GET /encoding/jobs`
+* [Get Job](jobs/get-single.md) : `GET /encoding/jobs/<id>`
+* [Create Job](jobs/create.md) : `POST /encoding/jobs`
+* [Delete Job](jobs/delete.md) : `DELETE /encoding/jobs/<id>`
+
 ### Videos
 
 The video resource for the Ingest service is a core component of our offering. It allows a user of Ingest to store metadata related to their video content in a single source for easy presentation to their end-users.
