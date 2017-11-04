@@ -44,3 +44,20 @@ Every user of the Ingest service belongs to one or more network. Every operation
 * [Remove user from Network](networks/user-remove.md) : `UNLINK /networks/<id>`
 
 ### Videos
+
+The video resource for the Ingest service is a core component of our offering. It allows a user of Ingest to store metadata related to their video content in a single source for easy presentation to their end-users.
+
+Our encoder uses the Video resource as the output location for the final media entity you use for playback. You can find more information about the encoding process on the Inputs, Profiles, and Jobs sections of the documentation.
+
+* [Count Videos](videos/count.md) : `HEAD /videos`
+* [Get Videos](videos/get.md) : `GET /videos`
+* [Get Video](videos/get-single.md) : `GET /videos/<id>`
+* [Create Video](videos/create.md) : `POST /videos`
+* [Update Video](videos/update.md) : `PATCH /videos/<id>`
+* [Delete Video](videos/delete.md) : `DELETE /videos/<id>`
+* [Get Thumbnails](videos/get-thumbnails.md) : `GET /videos/<id>/thumbnails`
+* [Upload Thumbnail](videos/upload-thumbnail.md) : `POST /videos/<id>/thumbnail`
+* [Associate Thumbnails](videos/associate-thumbnails.md) : `POST /videos/<id>/thumbnails`
+* [Delete Thumbnail](videos/delete-thumbnail.md) : `DELETE /videos/<id>/thumbnail/<id>`
+* [Get Private State](videos/get-private.md) : `GET /videos/<id>/private`
+* [Get Variants](videos/get-variants.md) : `GET /videos/<id>/variants`
